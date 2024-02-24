@@ -1,0 +1,15 @@
+---
+- hosts: haproxy
+  become: yes
+  vars_files:
+  - env_variables
+  tasks:
+    - name: Install EPEL repository
+      yum:
+        name: epel-release
+        state: present
+
+    - name: Install HAProxy
+      yum:
+        name: haproxy
+        state: present

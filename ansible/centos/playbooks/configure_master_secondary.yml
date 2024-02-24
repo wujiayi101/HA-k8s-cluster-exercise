@@ -1,0 +1,17 @@
+---
+- hosts: master_secondary
+  become: yes
+  vars_files:
+  - env_variables
+  tasks:
+  - name: Pulling images required for setting up a Kubernetes cluster
+    shell: kubeadm config images pull
+
+  - name: Copying token to worker nodes
+    copy: src={{ token_file }} dest=join_token
+
+  - name: Joining as secondary control plane
+    shell: |
+     kubeadm reset -f
+     tail -n 12 join_token | head -n 3 > out.sh
+     sh out.sh

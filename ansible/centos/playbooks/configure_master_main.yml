@@ -12,12 +12,18 @@
     register: output
 
   - name: Initializing Kubernetes cluster
-    shell: kubeadm init --node-name "main" --control-plane-endpoint={{master_addr}}:6443 --upload-certs --apiserver-advertise-address={{master_addr}} --pod-network-cidr={{cidr_v}}
+    shell: kubeadm init --control-plane-endpoint {{ ad_addr }} --upload-certs --pod-network-cidr={{ cidr_v }}
     register: output
 
   - name: Storing Logs and Generated token for future purpose.
     local_action: copy content={{ output.stdout }} dest={{ token_file }}
     become: False
+
+  - name: Download kubeconfig so you can set up your laptop to access cluster API
+    fetch:
+      src: /etc/kubernetes/admin.conf
+      dest: kubeconfig
+      flat: yes
 
   - name: Copying required files
     shell: |

@@ -5,6 +5,7 @@ provider "registry.terraform.io/digitalocean/digitalocean" {
   version     = "2.34.1"
   constraints = "~> 2.0"
   hashes = [
+    "h1:5tfXRq80lhTUCYxAqcUGL8BjR3SSTk+ggiW20UvK+JA=",
     "h1:6oTGKAjnYH6b+TvyWnaItFe18UFA5V0fyNMrOmmbeT0=",
     "zh:022d4c97af3d022d4e3735a81c6a7297aa43c3b28a8cecaa0ff58273a5677e2e",
     "zh:1922f86d5710707eb497fbebcb1a1c5584c843a7e95c3900d750d81bd2785204",
@@ -29,6 +30,7 @@ provider "registry.terraform.io/linode/linode" {
   version     = "2.5.2"
   constraints = "2.5.2"
   hashes = [
+    "h1:9QwheKqQNi8qsRu+oOO4yMb1/4ObJQw5Ec+RemxpCXI=",
     "h1:tuPgprgYLUs6ryBTMGo6yRIw1BxRJkimcyVZ9STt4rU=",
     "zh:04076cba48e75756432bef20f96c09ca46c5922f03d081d913fb47895bb838d1",
     "zh:0698816c5b51460991b906e4b68083c65dc9e4812f8aee35900a9f528e1e12a0",

@@ -1,23 +1,23 @@
-[master_all:children]
+[master_nodes:children]
 master_main
 master_secondary
 
 [master_main]
-master1 ansible_host=139.177.187.67
+master1 ansible_host=152.42.188.4
 
 [master_secondary]
-master2 ansible_host=143.198.206.139
-master3 ansible_host=128.199.185.234
+master2 ansible_host=159.223.58.184
+master3 ansible_host=103.3.62.191
 
 [worker_all]
-worker1 ansible_host=139.162.41.180
-worker2 ansible_host=139.59.115.76
+worker1 ansible_host=152.42.188.93
+worker2 ansible_host=172.104.39.71
 
-[lb]
-lb ansible_host=172.104.63.171
+; [lb]
+; lb ansible_host=139.162.37.167
 
 [all:children]
-master_all
+master_nodes
 worker_all
 
 [all:vars]

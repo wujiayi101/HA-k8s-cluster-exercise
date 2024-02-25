@@ -1,5 +1,5 @@
-lb_addr: 172.104.63.171
-master_addr: 139.177.187.67
+lb_addr: 139.162.37.167
+ad_addr: 152.42.188.4
 cidr_v: 10.244.0.0/16
 
 packages:
@@ -27,3 +27,4 @@ worker_ports:
 - "30000-32767/tcp"
 
 token_file: join_token
+

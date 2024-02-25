@@ -1,7 +1,3 @@
-join_token
-mykey
-mykey.pub
-
 # Created by https://www.toptal.com/developers/gitignore/api/terraform
 # Edit at https://www.toptal.com/developers/gitignore?templates=terraform
 
@@ -42,3 +38,12 @@ override.tf.json
 terraform.rc
 
 # End of https://www.toptal.com/developers/gitignore/api/terraform
+
+
+###################################
+Secrets specific to this project
+###################################
+join_token
+mykey
+mykey.pub
+kubeconfig

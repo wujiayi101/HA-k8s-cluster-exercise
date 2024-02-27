@@ -13,6 +13,15 @@ This allows you to develop in a isolated container with all the required applica
 
 ## Create VMs on the cloud
 
+| **Name**              | **Role**      | **Cloud Provider** |
+|-----------------------|---------------|--------------------|
+| **master1 (primary)** | control plane | DigitalOcean       |
+| **master2**           | control plane | DigitalOcean       |
+| **master3**           | control plane | Linode             |
+| **worker1**           | worker node   | DigitalOcean       |
+| **worker2**           | worker node   | Linode             |
+
+
 Create API token from both linode and digitalocean, and configure the environment variables
 
 ```

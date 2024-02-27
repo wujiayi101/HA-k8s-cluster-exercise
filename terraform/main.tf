@@ -1,13 +1,5 @@
 # https://api.linode.com/v4/linode/types
 
-module "lb" {
-  source          = "./modules/linode"
-  token           = var.linode_token
-  type            = "g6-nanode-1"
-  authorized_keys = [var.public_key]
-  label           = "loadbalancer"
-}
-
 module "master1" {
   source   = "./modules/digitalocean"
   token    = var.do_token

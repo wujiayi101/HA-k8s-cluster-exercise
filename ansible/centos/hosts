@@ -13,9 +13,6 @@ master3 ansible_host=139.162.38.132
 worker1 ansible_host=157.230.36.105
 worker2 ansible_host=139.162.38.141
 
-; [lb]
-; lb ansible_host=139.162.38.119
-
 [all:children]
 master_nodes
 worker_all

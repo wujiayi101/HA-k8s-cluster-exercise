@@ -33,11 +33,14 @@ This outputs the IPs of all the created VMs and a ssh key pair, you will need th
 
 ## Provision HA cluster using ansible
 
-```
-cd ansible/centos/
-ansible-playbook --private-key /path/to/private/key setup_masters.yml
-ansible-playbook --private-key /path/to/private/key setup_workers.yml
-```
+1. Update the ips in `ansible/centos/playbooks/env_variables` and `hosts` using the terraform output
+1. Run the follow command to provision the nodes
+
+    ```
+    cd ansible/centos/
+    ansible-playbook --private-key /path/to/private/key setup_masters.yml
+    ansible-playbook --private-key /path/to/private/key setup_workers.yml
+    ```
 
 ## Configure kubeconfig on your local machine
 
@@ -50,6 +53,7 @@ This copies the downloaded kubeconfig to your `~/.kube` folder so you can intera
 ## Deploy n8n application to the cluster
 
 ```
+kubectl create namespace n8n
 kubectl apply -f n8n/
 ```
 

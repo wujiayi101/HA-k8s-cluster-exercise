@@ -1,15 +1,20 @@
-# Examples to spin a HA Kubernetes cluster
+# Steps to spin up a HA Kubernetes cluster
 
-## Develop in a Dev Container
+## Develop in a devcontainer
 
-This allows you to develop in a isolated container with all the required applications like terraform, ansible, linter, etc. 
+Devcontainer allows you to develop in an isolated container with all required software pre-installed. I strongly recommand setting up devcontainer before you start the subsequent steps. 
+
+<details>
+  <summary>How to set up a devcontainer?</summary>
 
 1. Ensure Docker is installed and running
-2. Install [vscode](https://code.visualstudio.com/) and `Dev Containers` extension
-3. Open this project in vscode
-4. Launch `Command Palette` from the UI or run `⌘ + Shift + P` if you are on Mac
-5. Select either `Reopen in Container` or `Rebuild Container` to start the Devcontainer
-6. Start terminal in vscode before you run the subsequent steps
+1. Install [vscode](https://code.visualstudio.com/) and `Dev Containers` extension
+1. Open this project in vscode
+1. Launch `Command Palette` from the UI or run `⌘ + Shift + P` if you are on Mac
+1. Select either `Reopen in Container` or `Rebuild Container` to start the Devcontainer
+1. Start terminal in vscode before you run the subsequent steps
+</details>
+
 
 ## Create VMs on the cloud
 
@@ -22,28 +27,23 @@ This allows you to develop in a isolated container with all the required applica
 | **worker2**           | worker node   | Linode             |
 
 
-Create API token from both linode and digitalocean, and configure the environment variables
+1. Create API token for both Linode and DigitalOcean, and then configure the following environment variables:
+    ```
+    export TF_VAR_do_token=<digital ocean token>
+    export TF_VAR_linode_token=<linode token>
+    ```
+1. Run terraform to create the VMs
 
-```
-export TF_VAR_do_token=<your do token>
-export TF_VAR_linode_token=<your liode token>
-```
-
-Run terraform
-
-```
-cd terraform/
-terraform init
-terraform apply
-```
-
-This outputs the IPs of all the created VMs and a ssh key pair, you will need them in the ansible provisioning step
-
+    ```
+    cd terraform/
+    terraform init
+    terraform apply
+    ```
 
 ## Provision HA cluster using ansible
 
-1. Update the ips in `ansible/centos/playbooks/env_variables` and `hosts` using the terraform output
-1. Run the follow command to provision the nodes
+1. Update the IPs in `ansible/centos/playbooks/env_variables` and `hosts` using the IPs produced by the terraform output
+1. Run the follow ansible commands to provision the nodes
 
     ```
     cd ansible/centos/
@@ -51,18 +51,49 @@ This outputs the IPs of all the created VMs and a ssh key pair, you will need th
     ansible-playbook --private-key /path/to/private/key setup_workers.yml
     ```
 
-## Configure kubeconfig on your local machine
+## Configure kubeconfig on your machine
 
-This copies the downloaded kubeconfig to your `~/.kube` folder so you can interact with the kube api server
+Run `./setup_kubeconfig.sh` to copy kube config to `~/.kube` folder so you can interact with the Kubernetes API server.
+
+## Configure Secrets 
+
+1. Create 2 secrets in [AWS Secret Manager](https://aws.amazon.com/secrets-manager/) `us-east-1` region (_Please replace the dummy values with stronger secret_):
+
+    <details><summary><i>n8n-secrets</i></summary>
+    
+        "DB_POSTGRESDB_PASSWORD": "n8n",
+        "N8N_BASIC_AUTH_PASSWORD": "n8n",
+        "N8N_ENCRYPTION_KEY": "n8n"
+    
+    </details>
+
+    <details><summary><i>postgres-secrets</i></summary>
+
+        "PGDATA": "/var/lib/postgresql/data/pgdata",
+        "POSTGRES_USER": "n8n",
+        "POSTGRES_DB": "n8n",
+        "POSTGRES_PASSWORD": "n8n"
+
+    </details>
+    
+    
+1. Create an AWS IAM user with read permissions to both secrets
+1. Generate an access key under the IAM user and create a Kubernetes secret to hold the access key. Kubernetes uses access key from this secret to pull external secrets to the cluster.
+    ```
+    kubectl create namespace n8n
+    kubectl create secret generic aws-secret \ 
+        --from-literal=access-key-id=<aws_access_key_id> \
+        --from-literal=access-key-secret=<aws_secret_access_key> -n n8n
+    ```
+1. Create two [external-secrets](https://external-secrets.io/) which will be consumed by the application. 
+    ```
+    ./install_eso.sh
+    kubectl apply -f n8n/external-secrets/
+    ```
+
+## Deploy n8n application
 
 ```
-./setup_kubeconfig.sh
-```
-
-## Deploy n8n application to the cluster
-
-```
-kubectl create namespace n8n
 kubectl apply -f n8n/
 ```
 

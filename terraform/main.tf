@@ -39,3 +39,19 @@ module "worker2" {
   authorized_keys = [var.public_key]
   label           = "linode-worker2"
 }
+
+module "lb1" {
+  source          = "./modules/linode"
+  token           = var.linode_token
+  type            = "g6-nanode-1"
+  authorized_keys = [var.public_key]
+  label           = "linode-lb"
+}
+
+module "lb2" {
+  source          = "./modules/linode"
+  token           = var.linode_token
+  type            = "g6-nanode-1"
+  authorized_keys = [var.public_key]
+  label           = "linode-lb"
+}

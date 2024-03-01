@@ -5,7 +5,7 @@
 Devcontainer allows you to develop in an isolated container with all required software pre-installed. I strongly recommand setting up devcontainer before you start the subsequent steps. 
 
 <details>
-  <summary>How to set up a devcontainer?</summary>
+  <summary><i>How to set up a devcontainer?</i></summary>
 
 1. Ensure Docker is installed and running
 1. Install [vscode](https://code.visualstudio.com/) and `Dev Containers` extension
@@ -25,13 +25,19 @@ Devcontainer allows you to develop in an isolated container with all required so
 | **master3**           | control plane | Linode             |
 | **worker1**           | worker node   | DigitalOcean       |
 | **worker2**           | worker node   | Linode             |
+| **lb1**                | load balancer | Linode         |
+| **lb2**                | load balancer | Linode         |
 
+
+<details>
+    <summary><i>Run Terraform to Create the VMs</i></summary>
 
 1. Create API token for both Linode and DigitalOcean, and then configure the following environment variables:
     ```
     export TF_VAR_do_token=<digital ocean token>
     export TF_VAR_linode_token=<linode token>
     ```
+
 1. Run terraform to create the VMs
 
     ```
@@ -39,17 +45,25 @@ Devcontainer allows you to develop in an isolated container with all required so
     terraform init
     terraform apply
     ```
+</details>
+
+
 
 ## Provision HA cluster using ansible
 
-1. Update the IPs in `ansible/centos/playbooks/env_variables` and `hosts` using the IPs produced by the terraform output
-1. Run the follow ansible commands to provision the nodes
+Update IPs in `ansible/centos/playbooks/env_variables` and `hosts` using the IPs produced by the terraform output
 
-    ```
-    cd ansible/centos/
-    ansible-playbook --private-key /path/to/private/key setup_masters.yml
-    ansible-playbook --private-key /path/to/private/key setup_workers.yml
-    ```
+<details>
+    <summary><i>Run Ansible to Configure Nodes and Create the Cluster</i></summary>
+
+```
+cd ansible/centos/
+ansible-playbook --private-key /path/to/private/key setup_cluster.yml
+```
+
+</details>
+
+    
 
 ## Configure kubeconfig on your machine
 

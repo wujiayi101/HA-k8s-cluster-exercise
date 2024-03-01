@@ -1,5 +1,5 @@
 ---
-- hosts: master_secondary
+- hosts: master_standby
   become: yes
   vars_files:
   - env_variables
@@ -10,7 +10,7 @@
   - name: Copying token to worker nodes
     copy: src={{ token_file }} dest=join_token
 
-  - name: Joining as secondary control plane
+  - name: Joining as standby control plane
     shell: |
      kubeadm reset -f
      tail -n 12 join_token | head -n 3 > out.sh

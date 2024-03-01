@@ -1,4 +1,8 @@
 ---
 - import_playbook: playbooks/prerequisites.yml
 - import_playbook: playbooks/setting_up_nodes.yml
+- import_playbook: playbooks/configure_master_main.yml
+- import_playbook: playbooks/configure_master_standby.yml
 - import_playbook: playbooks/configure_workers.yml
+
+

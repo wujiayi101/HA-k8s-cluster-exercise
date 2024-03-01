@@ -1,0 +1,62 @@
+---
+- hosts: loadbalancers
+  become: yes
+  vars_files:
+  - env_variables
+  tasks:
+
+  - name: Installing firewalld
+    shell: |
+     yum install firewalld -y
+
+  - name: Starting and Enabling firewalld
+    service:
+     name: firewalld
+     state: started
+     enabled: yes
+
+  - name: Allow Network Ports in Firewalld
+    ansible.posix.firewalld:
+     port: "80/tcp"
+     state: enabled
+     permanent: yes
+     immediate: yes
+
+  - name: Allow Network Ports in Firewalld
+    ansible.posix.firewalld:
+     port: "8080/tcp"
+     state: enabled
+     permanent: yes
+     immediate: yes
+
+
+  - name: Allow masquerading in Firewalld
+    ansible.posix.firewalld:
+      masquerade: "yes"
+      state: enabled
+      permanent: yes
+      immediate: yes
+
+  - name: Install HAProxy package
+    yum:
+      name: haproxy
+      state: present
+    become: true
+
+  - name: Append proxy configuration block
+    blockinfile:
+      path: /etc/haproxy/haproxy.cfg
+      block: |
+        frontend n8n-service-front
+            bind *:80
+            default_backend n8n-service-back
+
+        backend n8n-service-back
+            balance roundrobin
+            server worker1 {{ worker1_addr }}:30008 check
+            server worker2 {{ worker2_addr }}:30008 check
+
+  - name: Restart haproxy
+    service:
+      name: haproxy
+      state: restarted

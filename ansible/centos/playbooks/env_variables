@@ -1,4 +1,8 @@
 ad_addr: 152.42.172.7
+lb_addr: 139.162.27.39
+worker1_addr: 152.42.172.7
+worker2_addr: 139.162.38.141
+
 cidr_v: 10.244.0.0/16
 
 packages:

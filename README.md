@@ -87,7 +87,9 @@ Run `./setup_kubeconfig.sh` to copy kube config to `~/.kube` folder so you can i
     ```
 1. Create two [external-secrets](https://external-secrets.io/) which will be consumed by the application. 
     ```
+    # Make sure run the following commands one by one, the order matters!
     ./install_eso.sh
+    kubectl apply -f n8n/external-secrets/secret-store.yaml 
     kubectl apply -f n8n/external-secrets/
     ```
 

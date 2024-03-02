@@ -3,18 +3,19 @@ master_main
 master_standby
 
 [master_main]
-master1 ansible_host=152.42.172.7
+master1 ansible_host=188.166.227.48
 
 [master_standby]
-master2 ansible_host=152.42.180.249
-master3 ansible_host=139.162.38.132
+master2 ansible_host=172.104.163.62
+master3 ansible_host=172.105.122.208
 
 [workers]
-worker1 ansible_host=157.230.36.105
-worker2 ansible_host=139.162.38.141
+worker1 ansible_host=178.128.25.84
+worker2 ansible_host=172.104.33.224
 
 [loadbalancers]
-lb ansible_host=139.162.27.39
+lb1 ansible_host=172.104.33.210
+lb2 ansible_host=178.128.217.0
 
 [all:children]
 masters

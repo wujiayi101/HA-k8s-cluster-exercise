@@ -5,9 +5,11 @@
   - env_variables
   tasks:
 
-  - name: Installing firewalld
-    shell: |
-     yum install firewalld -y
+  - name: Install firewalld
+    yum:
+      name: firewalld
+      state: present
+    become: true
 
   - name: Starting and Enabling firewalld
     service:
@@ -17,18 +19,11 @@
 
   - name: Allow Network Ports in Firewalld
     ansible.posix.firewalld:
-     port: "80/tcp"
+     port: "{{ item }}"
      state: enabled
      permanent: yes
      immediate: yes
-
-  - name: Allow Network Ports in Firewalld
-    ansible.posix.firewalld:
-     port: "8080/tcp"
-     state: enabled
-     permanent: yes
-     immediate: yes
-
+    with_items: "{{ lb_ports }}"
 
   - name: Allow masquerading in Firewalld
     ansible.posix.firewalld:
@@ -37,24 +32,52 @@
       permanent: yes
       immediate: yes
 
+  - name: Enabling Bridge Firewall Rule
+    shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
+
+  - name: Uninstall HAProxy package
+    yum:
+      name: haproxy
+      state: absent
+    become: true
+
   - name: Install HAProxy package
     yum:
       name: haproxy
       state: present
     become: true
 
+  - name: Put SELinux in permissive mode
+    ansible.posix.selinux:
+      policy: targeted
+      state: permissive
+
   - name: Append proxy configuration block
     blockinfile:
       path: /etc/haproxy/haproxy.cfg
       block: |
-        frontend n8n-service-front
+        frontend n8n
             bind *:80
-            default_backend n8n-service-back
+            mode tcp
+            default_backend n8n-backend
 
-        backend n8n-service-back
+        backend n8n-backend
             balance roundrobin
+            mode tcp
             server worker1 {{ worker1_addr }}:30008 check
             server worker2 {{ worker2_addr }}:30008 check
+
+        frontend k8s    
+            bind *:6443
+            mode tcp
+            default_backend k8s-backend
+
+        backend k8s-backend
+            mode tcp
+            balance roundrobin
+            server master1 {{ master1_addr }}:6443 check
+            server master2 {{ master2_addr }}:6443 check
+            server master3 {{ master3_addr }}:6443 check
 
   - name: Restart haproxy
     service:

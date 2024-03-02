@@ -32,10 +32,16 @@ Devcontainer allows you to develop in an isolated container with all required so
 <details>
     <summary><i>Run Terraform to Create the VMs</i></summary>
 
-1. Create API token for both Linode and DigitalOcean, and then configure the following environment variables:
+1. Create API token for both Linode and DigitalOcean, and set the following environment variables
     ```
-    export TF_VAR_do_token=<digital ocean token>
-    export TF_VAR_linode_token=<linode token>
+    export TF_VAR_do_token=****************
+    export TF_VAR_linode_token=****************
+    ```
+1. This exercise also assumes that you have a AWS route53 hosted zone. Please create IAM access and set the following environment variables so you can create a DNS record for the loadbalancer IPs:
+    ```
+    export AWS_ACCESS_KEY_ID=****************
+    export AWS_SECRET_ACCESS_KEY=****************
+    export AWS_REGION=us-east-1   
     ```
 
 1. Run terraform to create the VMs
@@ -115,6 +121,5 @@ kubectl apply -f n8n/
 
 ## Open the application UI
 
-1. Run `kubectl get svc -n n8n` to get the NodePort
-1. Open URL `https://<worker-node-ip>:<node-port>`
+https://n8n.wu101.com/
 

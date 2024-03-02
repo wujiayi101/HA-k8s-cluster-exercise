@@ -1,7 +1,9 @@
-ad_addr: 152.42.172.7
-lb_addr: 139.162.27.39
-worker1_addr: 152.42.172.7
-worker2_addr: 139.162.38.141
+master1_addr: 188.166.227.48
+master2_addr: 172.104.163.62
+master3_addr: 172.105.122.208
+
+worker1_addr: 178.128.25.84
+worker2_addr: 172.104.33.224
 
 cidr_v: 10.244.0.0/16
 
@@ -28,6 +30,11 @@ worker_ports:
 - "8285/udp"
 - "8472/udp"
 - "30000-32767/tcp"
+
+lb_ports: 
+- "80/tcp"
+- "443/tcp"
+- "6443/tcp"
 
 token_file: join_token
 

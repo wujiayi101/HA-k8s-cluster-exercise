@@ -51,7 +51,12 @@
      state: enabled
      permanent: yes
      immediate: yes
-    with_items: "{{ master_ports if ('master_nodes' in group_names) else worker_ports }}"
+    with_items: "{{ master_ports if ('masters' in group_names) else worker_ports }}"
+
+  - name: Put SELinux in permissive mode
+    ansible.posix.selinux:
+      policy: targeted
+      state: permissive
 
   - name: Allow masquerading in Firewalld
     ansible.posix.firewalld:

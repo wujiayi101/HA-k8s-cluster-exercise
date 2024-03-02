@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: masters,workers
   become: yes
   vars_files:
   - env_variables

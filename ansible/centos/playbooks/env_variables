@@ -1,3 +1,5 @@
+domain_name: n8n.wu101.com
+
 master1_addr: 188.166.227.48
 master2_addr: 172.104.163.62
 master3_addr: 172.105.122.208

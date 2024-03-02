@@ -12,7 +12,7 @@
     register: output
 
   - name: Initializing Kubernetes cluster
-    shell: kubeadm init --control-plane-endpoint {{ master1_addr }} --upload-certs --pod-network-cidr={{ cidr_v }}
+    shell: kubeadm init --control-plane-endpoint {{ domain_name }} --upload-certs --pod-network-cidr={{ cidr_v }}
     register: output
 
   - name: Storing Logs and Generated token for future purpose.

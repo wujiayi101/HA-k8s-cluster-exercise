@@ -26,7 +26,7 @@ Devcontainer allows you to develop in an isolated container with all required so
 | **worker1**           | worker node   | DigitalOcean       |
 | **worker2**           | worker node   | Linode             |
 | **lb1**                | load balancer | Linode         |
-| **lb2**                | load balancer | Linode         |
+| **lb2**                | load balancer | DigitalOcean          |
 
 
 <details>

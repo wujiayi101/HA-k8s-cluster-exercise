@@ -18,6 +18,8 @@ Devcontainer allows you to develop in an isolated container with all required so
 
 ## Create VMs on the cloud
 
+![ha diagram](./images/ha-k8s.png)
+
 | **Name**              | **Role**      | **Cloud Provider** |
 |-----------------------|---------------|--------------------|
 | **master1 (primary)** | control plane | DigitalOcean       |
@@ -27,6 +29,8 @@ Devcontainer allows you to develop in an isolated container with all required so
 | **worker2**           | worker node   | Linode             |
 | **lb1**                | load balancer | Linode         |
 | **lb2**                | load balancer | DigitalOcean          |
+
+
 
 
 <details>

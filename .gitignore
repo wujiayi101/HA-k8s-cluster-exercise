@@ -47,3 +47,4 @@ join_token
 mykey
 mykey.pub
 kubeconfig
+terraform/outputs.json

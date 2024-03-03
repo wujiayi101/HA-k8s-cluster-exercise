@@ -41,7 +41,7 @@ module "worker2" {
 module "lb1" {
   source          = "./modules/linode"
   token           = var.linode_token
-  type            = local.small_vm_linode
+  type            = local.big_vm_linode
   authorized_keys = [var.public_key]
   label           = "linode-lb"
 }
@@ -49,7 +49,7 @@ module "lb1" {
 module "lb2" {
   source   = "./modules/digitalocean"
   token    = var.do_token
-  size     = local.small_vm_do
+  size     = local.big_vm_do
   ssh_keys = [var.do_key_fingerprint]
   name     = "do-lb"
 }

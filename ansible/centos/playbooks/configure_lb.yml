@@ -11,6 +11,27 @@
       state: present
     become: true
 
+  - name: dnf Install firewalld
+    dnf:
+      name: epel-release
+      state: latest
+    become: true
+
+  - name: yum Install firewalld
+    yum:
+      name: epel-release
+      state: present
+    become: true
+
+  - name: Install snapd
+    yum:
+      name: snapd
+      state: present
+    become: true
+
+  - name: enable snapd.socket
+    shell: systemctl enable --now snapd.socket
+
   - name: Starting and Enabling firewalld
     service:
      name: firewalld
@@ -31,9 +52,6 @@
       state: enabled
       permanent: yes
       immediate: yes
-
-  - name: Enabling Bridge Firewall Rule
-    shell: "echo '1' > /proc/sys/net/bridge/bridge-nf-call-iptables"
 
   - name: Uninstall HAProxy package
     yum:

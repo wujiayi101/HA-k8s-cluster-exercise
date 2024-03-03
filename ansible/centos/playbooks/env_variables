@@ -1,11 +1,11 @@
 domain_name: n8n.wu101.com
 
-master1_addr: 188.166.227.48
-master2_addr: 172.104.163.62
-master3_addr: 172.105.122.208
+master1_addr: 159.223.60.138
+master2_addr: 139.162.34.210
+master3_addr: 139.177.189.26
 
-worker1_addr: 178.128.25.84
-worker2_addr: 172.104.33.224
+worker1_addr: 159.223.50.11
+worker2_addr: 139.177.189.14
 
 cidr_v: 10.244.0.0/16
 

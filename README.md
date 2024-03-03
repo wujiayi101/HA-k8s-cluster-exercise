@@ -30,9 +30,6 @@ Devcontainer allows you to develop in an isolated container with all required so
 | **lb1**                | load balancer | Linode         |
 | **lb2**                | load balancer | DigitalOcean          |
 
-
-
-
 <details>
     <summary><i>Run Terraform to Create the VMs</i></summary>
 
@@ -63,17 +60,27 @@ Devcontainer allows you to develop in an isolated container with all required so
 
 Update IPs in `ansible/centos/playbooks/env_variables` and `hosts` using the IPs produced by the terraform output
 
+
 <details>
     <summary><i>Run Ansible to Configure Nodes and Create the Cluster</i></summary>
 
-```
-cd ansible/centos/
-ansible-playbook --private-key /path/to/private/key setup_cluster.yml
-```
+1. Update IPs in Ansible scripts
+    ```
+    cd terraform/
+    terraform output -json > outputs.json
+
+    cd ../
+    python3 update_ip.py
+    ```
+
+1. Run ansible to create the cluster
+    ```
+    cd ansible/centos/
+    ansible-playbook --private-key /path/to/private/key setup_cluster.yml
+    ```
 
 </details>
 
-    
 
 ## Configure kubeconfig on your machine
 

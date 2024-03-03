@@ -11,27 +11,6 @@
       state: present
     become: true
 
-  - name: dnf Install firewalld
-    dnf:
-      name: epel-release
-      state: latest
-    become: true
-
-  - name: yum Install firewalld
-    yum:
-      name: epel-release
-      state: present
-    become: true
-
-  - name: Install snapd
-    yum:
-      name: snapd
-      state: present
-    become: true
-
-  - name: enable snapd.socket
-    shell: systemctl enable --now snapd.socket
-
   - name: Starting and Enabling firewalld
     service:
      name: firewalld
@@ -76,12 +55,12 @@
       block: |
         frontend n8n
             bind *:80
-            mode tcp
+            mode http
             default_backend n8n-backend
 
         backend n8n-backend
             balance roundrobin
-            mode tcp
+            mode http
             server worker1 {{ worker1_addr }}:30008 check
             server worker2 {{ worker2_addr }}:30008 check
 

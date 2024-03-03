@@ -23,7 +23,7 @@ Devcontainer allows you to develop in an isolated container with all required so
 | **Name**              | **Role**      | **Cloud Provider** |
 |-----------------------|---------------|--------------------|
 | **master1 (primary)** | control plane | DigitalOcean       |
-| **master2**           | control plane | DigitalOcean       |
+| **master2**           | control plane | Linode       |
 | **master3**           | control plane | Linode             |
 | **worker1**           | worker node   | DigitalOcean       |
 | **worker2**           | worker node   | Linode             |
@@ -118,10 +118,7 @@ Run `./setup_kubeconfig.sh` to copy kube config to `~/.kube` folder so you can i
     ```
 1. Create two [external-secrets](https://external-secrets.io/) which will be consumed by the application. 
     ```
-    # Make sure run the following commands one by one, the order matters!
-    ./install_eso.sh
-    kubectl apply -f n8n/external-secrets/secret-store.yaml 
-    kubectl apply -f n8n/external-secrets/
+    ./create_external_secrets.sh
     ```
 
 ## Deploy n8n application

@@ -55,6 +55,8 @@
       block: |
         frontend n8n
             bind *:80
+            bind :443 ssl crt /etc/haproxy/mycert.pem  # Currently this cert should be 'manually' created using letsencrypt/certbot
+            http-request redirect scheme https unless { ssl_fc }
             mode http
             default_backend n8n-backend
 

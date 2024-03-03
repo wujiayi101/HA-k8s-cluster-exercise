@@ -131,3 +131,5 @@ kubectl apply -f n8n/
 
 https://n8n.wu101.com/
 
+* Certificate is issued using https://letsencrypt.org/
+

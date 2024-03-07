@@ -3,19 +3,19 @@ master_main
 master_standby
 
 [master_main]
-master1 ansible_host=188.166.218.212
+master1 ansible_host=192.168.0.0 # update me
 
 [master_standby]
-master2 ansible_host=139.162.53.13
-master3 ansible_host=172.104.180.156
+master2 ansible_host=192.168.0.0 # update me
+master3 ansible_host=192.168.0.0 # update me
 
 [workers]
-worker1 ansible_host=209.97.174.234
-worker2 ansible_host=139.162.44.107
+worker1 ansible_host=192.168.0.0 # update me
+worker2 ansible_host=192.168.0.0 # update me
 
 [loadbalancers]
-lb1 ansible_host=172.104.34.42
-lb2 ansible_host=209.97.161.95
+lb1 ansible_host=192.168.0.0 # update me
+lb2 ansible_host=192.168.0.0 # update me
 
 [all:children]
 masters

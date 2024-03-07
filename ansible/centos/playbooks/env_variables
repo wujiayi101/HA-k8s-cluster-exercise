@@ -1,11 +1,11 @@
 domain_name: n8n.wu101.com
 
-master1_addr: 188.166.218.212
-master2_addr: 139.162.53.13
-master3_addr: 172.104.180.156
+master1_addr: 192.168.0.0 # update me
+master2_addr: 192.168.0.0 # update me
+master3_addr: 192.168.0.0 # update me
 
-worker1_addr: 209.97.174.234
-worker2_addr: 139.162.44.107
+worker1_addr: 192.168.0.0 # update me
+worker2_addr: 192.168.0.0 # update me
 
 cidr_v: 10.244.0.0/16
 

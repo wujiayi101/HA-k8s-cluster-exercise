@@ -1,4 +1,4 @@
-domain_name: n8n.wu101.com
+domain_name: kube.wu101.com
 
 master1_addr: 192.168.0.0 # update me
 master2_addr: 192.168.0.0 # update me

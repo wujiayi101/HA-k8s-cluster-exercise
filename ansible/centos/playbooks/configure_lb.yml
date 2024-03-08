@@ -57,19 +57,19 @@
             bind *:80
             bind :443 ssl crt /etc/haproxy/mycert.pem  # Currently this cert should be 'manually' created using letsencrypt/certbot
             http-request redirect scheme https unless { ssl_fc }
-            mode http
-            default_backend n8n-backend
+            mode tcp
+
+            acl ACL_n8n.wu101.com hdr(host) -i n8n.wu101.com
+            use_backend n8n-backend if ACL_n8n.wu101.com
+
+            acl ACL_kube.wu101.com hdr(host) -i kube.wu101.com
+            use_backend k8s-backend if ACL_kube.wu101.com
 
         backend n8n-backend
             balance roundrobin
-            mode http
+            mode tcp
             server worker1 {{ worker1_addr }}:30008 check
             server worker2 {{ worker2_addr }}:30008 check
-
-        frontend k8s    
-            bind *:6443
-            mode tcp
-            default_backend k8s-backend
 
         backend k8s-backend
             mode tcp

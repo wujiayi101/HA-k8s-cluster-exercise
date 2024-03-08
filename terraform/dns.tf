@@ -14,3 +14,15 @@ resource "aws_route53_record" "lb_a_record" {
     module.lb2.public_ip,
   ]
 }
+
+resource "aws_route53_record" "kube_a_record" {
+  zone_id = "Z07390752PGZAYQG9MZEQ"
+  name    = "kube.wu101.com"
+  type    = "A"
+  ttl     = 300
+
+  records = [
+    module.lb1.public_ip,
+    module.lb2.public_ip,
+  ]
+}
